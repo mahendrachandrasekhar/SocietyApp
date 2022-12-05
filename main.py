@@ -90,12 +90,12 @@ def uploadTab():
 
         gdrive.upload_file(SheetName,os.path.join("",uploaded_file.name),flatNumber)
 
-def voting():
+def polling():
     with st.form(key='my_form'):
         st.error('Vote for the appropriate option:')
         email = st.text(displayUserName + ' -  Flat Number: '+flatNumber)
         try:
-            SheetName = gsheetData.get_gsheet(sh,"CurrentVote")['Name'][0]
+            SheetName = gsheetData.get_gsheet(sh,"CurrentPoll")['Name'][0]
         except(KeyError):
             SheetName = ""
         if SheetName == "":
@@ -118,9 +118,9 @@ def voting():
             for i in range(len(question)):
                 gsheetData.set_gsheet(sh,SheetName,[displayUserName,flatNumber,question[i],answer[i],str(currTime)])
             st.write("Thank you for your vote")  
-def votingOutput():
+def pollingOutput():
         try:
-            SheetName = gsheetData.get_gsheet(sh,"CurrentVote")['Name'][0]
+            SheetName = gsheetData.get_gsheet(sh,"CurrentPoll")['Name'][0]
         except(KeyError):
             SheetName = ""
         if SheetName != "":
@@ -167,10 +167,10 @@ else:
                 st.dataframe(gsheetData.get_gsheet(sh,tabList[i]), width=1500, height=1500)
             if tabTypeList[i] == "Upload":
                 uploadTab()
-            if tabTypeList[i] == "VotingTemplate":
-                voting()
-            if tabTypeList[i] == "VotingResults":
-                votingOutput()
+            if tabTypeList[i] == "PollingTemplate":
+                polling()
+            if tabTypeList[i] == "PollingResults":
+                pollingOutput()
 
 
     
